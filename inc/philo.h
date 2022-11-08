@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:46:39 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/04 16:48:53 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/08 13:07:04 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,24 @@
 /*
 ** Define constants
 */
+
+/*
+** Structures
+*/
+
+typedef struct s_philo
+{
+
+}	t_philo;
+
+typedef struct s_main
+{
+	int	nb_philo;
+	int	time_eat;
+	int	time_die;
+	int	time_sleep;
+	int	nb_must_eat;
+}	t_main;
 
 
 # endif
