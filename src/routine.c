@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/04 16:32:55 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/14 16:14:48 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/14 16:51:25 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/14 16:52:00 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../inc/philo.h"
 
-int	main (int ac, char **av)
+void	routine(t_main *main)
 {
-	t_main main;
-
-	check(ac, av, &main);
-	return (0);
+	// code
 }

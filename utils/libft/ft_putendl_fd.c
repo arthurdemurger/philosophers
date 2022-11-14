@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/08 12:47:07 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/08 12:49:55 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/14 14:51:29 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/14 14:52:20 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/philo.h"
+#include "../../inc/philo.h"
 
-void	check(int ac, char **av)
+void	ft_putendl_fd(char *s, int fd)
 {
-	if (ac != 4 && ac != 5)
-		ft_error();
+	while (s && *s)
+		write(fd, s++, 1);
+	write(fd, "\n", 1);
 }

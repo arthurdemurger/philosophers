@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/04 16:32:55 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/14 16:14:48 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/14 15:08:44 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/14 15:10:05 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/philo.h"
-
-int	main (int ac, char **av)
+int	ft_isdigit(char c)
 {
-	t_main main;
-
-	check(ac, av, &main);
-	return (0);
+	return (c >= 48 && c <= 57);
 }
