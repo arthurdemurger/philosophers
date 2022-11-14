@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/05 13:40:38 by ademurge          #+#    #+#              #
-#    Updated: 2022/11/14 16:56:29 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/14 19:23:25 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,9 @@ RESET		= $(shell tput -Txterm sgr0)
 
 SRC			=	src/check_init.c \
 				src/error.c \
+				src/generator.c \
 				src/main.c \
-				src/routine.c
+				src/utils.c
 
 LIBFT		=	utils/libft/ft_atoi.c \
 				utils/libft/ft_isdigit.c \
