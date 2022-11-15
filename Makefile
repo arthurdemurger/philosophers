@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/05 13:40:38 by ademurge          #+#    #+#              #
-#    Updated: 2022/11/14 19:23:25 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/15 11:00:43 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ WHITE		= $(shell tput -Txterm setaf 7)
 RESET		= $(shell tput -Txterm sgr0)
 
 SRC			=	src/check_init.c \
-				src/error.c \
+				src/exit.c \
 				src/generator.c \
 				src/main.c \
 				src/utils.c

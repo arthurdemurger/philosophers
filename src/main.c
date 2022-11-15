@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:32:55 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/14 19:24:02 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/15 22:07:58 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	main (int ac, char **av)
 {
-	t_main main;
+	t_main		main;
 
-	check(ac, av, &main);
+	check_init(ac, av, &main);
 	generate(&main);
 	return (0);
 }

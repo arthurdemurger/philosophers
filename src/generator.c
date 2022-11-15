@@ -6,57 +6,59 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:51:25 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/14 19:58:39 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/15 22:43:06 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../inc/philo.h"
 
-void	sleeping(t_main *main, t_philo *philo)
+void	sleeping(t_main *main)
 {
-	// code
+	ft_usleep(main->t_sleep, main);
 }
 
 void	eating(t_main *main, t_philo *philo)
 {
 	if (pthread_mutex_lock(&philo->l_fk))
 		ft_error(MUTEX_ERROR);
-	put_action(philo, FORK);
+	put_action((t_main *)philo->main, philo->id, FORK);
 	if (pthread_mutex_lock(&philo->r_fk))
 		ft_error(MUTEX_ERROR);
-	put_action(philo, FORK);
-	put_action(philo, EATING);
+	put_action((t_main *)philo->main, philo->id, FORK);
 	if (pthread_mutex_lock(&main->eating))
 		ft_error(MUTEX_ERROR);
+	put_action((t_main *)philo->main, philo->id, EATING);
 	philo->last_eat = get_time_ms();
-	if (++philo->n_eat == main->max_eat)
-		// code
+	if (++philo->n_eat == main->n_max_eat)
+		main->is_max_eat = YES;
+	if (pthread_mutex_unlock(&main->eating))
+		ft_error(MUTEX_ERROR);
+	ft_usleep(main->t_eat, main);
 	if (pthread_mutex_unlock(&philo->r_fk))
 		ft_error(MUTEX_ERROR);
 	if (pthread_mutex_unlock(&philo->l_fk))
 		ft_error(MUTEX_ERROR);
 }
 
-void	routine(void *arg)
+void	*routine(void *arg)
 {
 	t_philo	*philo;
 	t_main	*main;
 
 	philo = (t_philo *)arg;
 	main = philo->main;
-	while (1)
+	if (!(philo->id % 2 == 0))
+		ft_usleep(1000, philo->main);
+	while (main->dead == NO)
 	{
 		eating(main, philo);
-		if (main->dead == YES)
+		if (main->is_max_eat == YES)
 			break ;
-		sleeping(main, philo);
-		if (main->dead == YES)
-			break ;
-		put_action(philo, SLEEPING);
-		if (main->dead == YES)
-			break ;
-		put_action(philo, THINKING);
+		put_action((t_main *)philo->main, philo->id, SLEEPING);
+		sleeping(main);
+		put_action((t_main *)philo->main, philo->id, THINKING);
 	}
+	return (NULL);
 }
 
 void	generate(t_main *main)

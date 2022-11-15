@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:46:39 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/14 19:49:19 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/15 21:53:10 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@
 /*
 ** Define constants
 */
+
+/* DEBUG */
+
+# define ICI printf("ici\n");
+# define LEAKS system("leaks philo");
+
+/* Characters */
 
 # define ARGUMENT_ERROR "Wrong number of arguments."
 # define NUMBER_TOO_BIG "The number entered is too big."
@@ -53,18 +60,18 @@ typedef struct s_philo
 	int					n_eat;
 	t_mutex				l_fk;
 	long long			last_eat;
-	struct t_main		*main;
 	t_mutex				r_fk;
+	struct s_main		*main;
 	pthread_t			th_id;
 }	t_philo;
 
 typedef struct s_main
 {
-	int					count_eat;
 	int					dead;
 	t_mutex				eating;
 	t_mutex				*forks;
-	int					max_eat;
+	int					n_max_eat;
+	int					is_max_eat;
 	int					n_philo;
 	t_philo				*philo;
 	int					t_eat;
@@ -78,12 +85,15 @@ typedef struct s_main
 ** Functions
 */
 
+void		check_death(t_main *main);
 void		check_init(int ac, char **av, t_main *main);
+void		end_philo(t_main *main);
 void		ft_error(char *type);
+void		ft_usleep(long long time, t_main *main);
 void		generate(t_main *main);
 long long	get_time_ms(void);
-void		routine(void *arg);
-void		put_action(t_philo *philo, char *type);
+void		*routine(void *arg);
+void		put_action(t_main *main, int philo_id, char *type);
 
 /*
 ** Utils functions
