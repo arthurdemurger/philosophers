@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/05 13:40:38 by ademurge          #+#    #+#              #
-#    Updated: 2022/11/16 10:57:46 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/16 15:08:42 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,11 @@ BLUE		= $(shell tput -Txterm setaf 6)
 WHITE		= $(shell tput -Txterm setaf 7)
 RESET		= $(shell tput -Txterm sgr0)
 
-SRC			=	src/error.c \
+SRC			=	src/actions.c \
+				src/exit.c \
 				src/init.c \
 				src/main.c \
+				src/start_eat.c \
 				src/utils.c
 
 NAME		= philo
