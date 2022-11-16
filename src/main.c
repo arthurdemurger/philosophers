@@ -5,18 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/04 16:32:55 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/15 22:07:58 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/16 09:43:51 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/16 11:03:51 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/philo.h"
+#include "../inc/philo.h"
 
-int	main (int ac, char **av)
+int main (int ac, char **av)
 {
-	t_main		main;
+	t_main	main;
 
-	check_init(ac, av, &main);
-	generate(&main);
-	return (0);
+	init(ac, av, &main);
+	//init(&main);
+	//generate(&main);
 }

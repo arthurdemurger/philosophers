@@ -5,34 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 19:07:00 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/15 22:33:27 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/16 09:54:22 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/16 11:22:03 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/philo.h"
-
-void	ft_usleep(long long time, t_main *main)
-{
-	long long tmp;
-
-	tmp = get_time_ms();
-	while (main->dead == NO)
-	{
-		if (get_time_ms() - tmp >= time)
-			break ;
-	}
-}
-
-void	put_action(t_main *main, int philo_id, char *type)
-{
-	if (pthread_mutex_lock(&main->writing))
-		ft_error(MUTEX_ERROR);
-	if (main->dead == NO)
-		printf("%lld %d %s\n", get_time_ms() - main->t_start, philo_id + 1, type);
-	if (pthread_mutex_unlock(&main->writing))
-		ft_error(MUTEX_ERROR);
-}
+#include "../inc/philo.h"
 
 long long	get_time_ms(void)
 {
@@ -40,4 +18,39 @@ long long	get_time_ms(void)
 
 	gettimeofday(&t, NULL);
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
+}
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	while (s && *s)
+		write(fd, s++, 1);
+	write(fd, "\n", 1);
+}
+
+static int	ft_isdigit(char c)
+{
+	return ((c >= '0' && c <= '9'));
+}
+
+int	ft_atoi(char *str)
+{
+	long long	sum;
+	int			i;
+
+	sum = 0;
+	i = 0;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			return (-1);
+		i++;
+	}
+	while (str[i] && ft_isdigit(str[i]))
+	{
+		sum = sum * 10 + (str[i] - 48);
+		i++;
+	}
+	if (str[i] && !ft_isdigit(str[i]))
+		ft_error(NOT_DIGIT_ERROR);
+	return (sum);
 }

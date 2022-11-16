@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/05 13:40:38 by ademurge          #+#    #+#              #
-#    Updated: 2022/11/15 11:00:43 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/16 10:57:46 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,15 +20,10 @@ BLUE		= $(shell tput -Txterm setaf 6)
 WHITE		= $(shell tput -Txterm setaf 7)
 RESET		= $(shell tput -Txterm sgr0)
 
-SRC			=	src/check_init.c \
-				src/exit.c \
-				src/generator.c \
+SRC			=	src/error.c \
+				src/init.c \
 				src/main.c \
 				src/utils.c
-
-LIBFT		=	utils/libft/ft_atoi.c \
-				utils/libft/ft_isdigit.c \
-				utils/libft/ft_putendl_fd.c
 
 NAME		= philo
 
@@ -37,7 +32,7 @@ CFLAGS		= -Wall -Wextra -Werror -pthread
 all:		$(NAME)
 
 $(NAME):
-			@gcc ${CFLAGS} ${SRC} ${LIBFT} -o ${NAME}
+			@gcc ${CFLAGS} ${SRC} -o ${NAME}
 			@echo "$(GREEN)********** Compiled. $(RESET)"
 
 clean:

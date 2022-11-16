@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 14:51:29 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/14 14:52:20 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/16 09:52:25 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/16 11:14:23 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/philo.h"
+#include "../inc/philo.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	ft_error(char *type)
 {
-	while (s && *s)
-		write(fd, s++, 1);
-	write(fd, "\n", 1);
+	write (STDERR_FILENO, "Error\n", 6);
+	ft_putendl_fd(type, STDERR_FILENO);
+	exit(EXIT_FAILURE);
 }
