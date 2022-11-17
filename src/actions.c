@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:05:52 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/16 16:02:48 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/17 15:27:45 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	unlock_forks(t_main *main, t_phi *phi)
 {
 	if (pthread_mutex_unlock(&main->fork[phi->l_fk]))
 		ft_error(MUTEX_ERROR);
-	if (main->n_phi == 1)
-		return ;
 	if (pthread_mutex_unlock(&main->fork[phi->r_fk]))
 		ft_error(MUTEX_ERROR);
 }
@@ -41,7 +39,6 @@ void	sleeping(t_main *main, int phi_id)
 void	eating(t_main *main, t_phi *phi)
 {
 	lock_forks(main, phi);
-	ft_usleep(main->t_eat);
 	put_action(main, phi->id, EATING);
 	if (pthread_mutex_lock(&main->eat))
 		ft_error(MUTEX_ERROR);	phi->n_eat++;
@@ -50,5 +47,6 @@ void	eating(t_main *main, t_phi *phi)
 		main->nb_phi_full++;
 	if (pthread_mutex_unlock(&main->eat))
 		ft_error(MUTEX_ERROR);
+	ft_usleep(main->t_eat);
 	unlock_forks(main, phi);
 }

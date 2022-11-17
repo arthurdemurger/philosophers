@@ -6,13 +6,13 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:31:49 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/16 16:09:29 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/17 15:28:38 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int	check_death(t_main *main, t_phi *phi)
+void	check_death(t_main *main, t_phi *phi)
 {
 	long long	current_time;
 
@@ -30,9 +30,7 @@ int	check_death(t_main *main, t_phi *phi)
 	}
 	if (pthread_mutex_unlock(&main->eat))
 		ft_error(MUTEX_ERROR);
-	if (main->is_dead == YES)
-		return (1);
-	return (0);
+	ft_usleep(100);
 }
 
 int	check_end(t_main *main)
@@ -74,12 +72,12 @@ void	*routine(void *arg)
 		ft_usleep(main->t_die);
 		return (NULL);
 	}
+	if (phi->id % 2 == 0)
+		ft_usleep(10);
 	while (main->is_dead == NO)
 	{
 		eating(main, phi);
 		put_action(main, phi->id, EATING);
-		if (main->is_max_eat)
-			break ;
 		sleeping(main, phi->id);
 		put_action(main, phi->id, THINKING);
 	}
