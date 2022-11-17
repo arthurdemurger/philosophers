@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:31:49 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/17 15:28:38 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/17 15:48:07 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	check_death(t_main *main, t_phi *phi)
 	ft_usleep(100);
 }
 
-int	check_end(t_main *main)
+void	check_end(t_main *main)
 {
 	int	i;
 
@@ -44,7 +44,7 @@ int	check_end(t_main *main)
 		{
 			check_death(main, &main->phi[i]);
 			if (main->is_dead == YES)
-				return (0);
+				break ;
 			else if (main->nb_phi_full == main->n_phi)
 			{
 				if (pthread_mutex_lock(&main->write))
@@ -52,11 +52,9 @@ int	check_end(t_main *main)
 				main->is_max_eat = YES;
 				if (pthread_mutex_unlock(&main->write))
 					ft_error(MUTEX_ERROR);
-				return (0);
 			}
 		}
 	}
-	return (1);
 }
 
 void	*routine(void *arg)
@@ -74,7 +72,7 @@ void	*routine(void *arg)
 	}
 	if (phi->id % 2 == 0)
 		ft_usleep(10);
-	while (main->is_dead == NO)
+	while (main->is_dead == NO && main->is_max_eat == NO)
 	{
 		eating(main, phi);
 		put_action(main, phi->id, EATING);
