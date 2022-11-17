@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:31:49 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/17 15:48:07 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/17 18:28:55 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	check_death(t_main *main, t_phi *phi)
 	}
 	if (pthread_mutex_unlock(&main->eat))
 		ft_error(MUTEX_ERROR);
-	ft_usleep(100);
+	ft_usleep(main->t_die);
 }
 
 void	check_end(t_main *main)
@@ -75,7 +75,6 @@ void	*routine(void *arg)
 	while (main->is_dead == NO && main->is_max_eat == NO)
 	{
 		eating(main, phi);
-		put_action(main, phi->id, EATING);
 		sleeping(main, phi->id);
 		put_action(main, phi->id, THINKING);
 	}
