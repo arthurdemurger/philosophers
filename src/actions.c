@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:05:52 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/17 15:27:45 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:07:25 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@ void	unlock_forks(t_main *main, t_phi *phi)
 
 void	sleeping(t_main *main, int phi_id)
 {
-	ft_usleep(main->t_sleep);
 	put_action(main, phi_id, SLEEPING);
+	main->phi[phi_id].status = SLEEP;
+	ft_usleep(main->t_sleep);
 }
 
 void	eating(t_main *main, t_phi *phi)
 {
 	lock_forks(main, phi);
 	put_action(main, phi->id, EATING);
+	phi->status = EAT;
 	if (pthread_mutex_lock(&main->eat))
 		ft_error(MUTEX_ERROR);	phi->n_eat++;
 	phi->last_eat = get_time_ms();

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:46:39 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/16 15:49:15 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:29:11 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,17 @@
 # define YES 1
 # define NO 0
 
-/* The different actions */
+/* Actions */
 # define FORK "has taken a fork"
 # define EATING "is eating"
 # define THINKING "is thinking"
 # define SLEEPING "is sleeping"
 # define DIED "died"
+
+/* States */
+# define EAT 0
+# define THINK 1
+# define SLEEP 2
 
 /*
 ** Structures
@@ -62,6 +67,7 @@ typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_phi
 {
+	int				status;
 	int				id;
 	int				n_eat;
 	long long		last_eat;
