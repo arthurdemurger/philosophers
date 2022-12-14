@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:05:52 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/22 17:07:25 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:39:37 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 void	lock_forks(t_main *main, t_phi *phi)
 {
 	if (pthread_mutex_lock(&main->fork[phi->l_fk]))
-		ft_error(MUTEX_ERROR);
+		ft_error(main, MUTEX_ERROR);
 	put_action(main, phi->id, FORK);
 	if (pthread_mutex_lock(&main->fork[phi->r_fk]))
-		ft_error(MUTEX_ERROR);
+		ft_error(main, MUTEX_ERROR);
 	put_action(main, phi->id, FORK);
 }
 
 void	unlock_forks(t_main *main, t_phi *phi)
 {
 	if (pthread_mutex_unlock(&main->fork[phi->l_fk]))
-		ft_error(MUTEX_ERROR);
+		ft_error(main, MUTEX_ERROR);
 	if (pthread_mutex_unlock(&main->fork[phi->r_fk]))
-		ft_error(MUTEX_ERROR);
+		ft_error(main, MUTEX_ERROR);
 }
 
 void	sleeping(t_main *main, int phi_id)
 {
 	put_action(main, phi_id, SLEEPING);
 	main->phi[phi_id].status = SLEEP;
-	ft_usleep(main->t_sleep);
+	ft_usleep(main, main->t_sleep);
 }
 
 void	eating(t_main *main, t_phi *phi)
@@ -43,12 +43,13 @@ void	eating(t_main *main, t_phi *phi)
 	put_action(main, phi->id, EATING);
 	phi->status = EAT;
 	if (pthread_mutex_lock(&main->eat))
-		ft_error(MUTEX_ERROR);	phi->n_eat++;
-	phi->last_eat = get_time_ms();
+		ft_error(main, MUTEX_ERROR);
+	phi->n_eat++;
 	if (phi->n_eat == main->max_eat)
 		main->nb_phi_full++;
 	if (pthread_mutex_unlock(&main->eat))
-		ft_error(MUTEX_ERROR);
-	ft_usleep(main->t_eat);
+		ft_error(main, MUTEX_ERROR);
+	phi->last_eat = get_time_ms();
+	ft_usleep(main, main->t_eat);
 	unlock_forks(main, phi);
 }

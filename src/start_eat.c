@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:31:49 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/22 17:13:37 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:54:17 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ void	check_death(t_main *main, t_phi *phi)
 
 	current_time = get_time_ms();
 	if (pthread_mutex_lock(&main->eat))
-		ft_error(MUTEX_ERROR);
+		ft_error(main, MUTEX_ERROR);
 	if (phi->status != EAT && current_time - phi->last_eat >= main->t_die)
 	{
 		if (pthread_mutex_lock(&main->write))
-			ft_error(MUTEX_ERROR);
+			ft_error(main, MUTEX_ERROR);
 		main->is_dead = YES;
 		printf("%lld %d %s\n", current_time - main->t_start, phi->id + 1, DIED);
 		if (pthread_mutex_unlock(&main->write))
-			ft_error(MUTEX_ERROR);
+			ft_error(main, MUTEX_ERROR);
 	}
 	if (pthread_mutex_unlock(&main->eat))
-		ft_error(MUTEX_ERROR);
+		ft_error(main, MUTEX_ERROR);
 	//ft_usleep(5);
 }
 
@@ -39,8 +39,8 @@ void	check_end(t_main *main)
 
 	while (main->is_dead == NO && main->is_max_eat == NO)
 	{
-		usleep(20);
 		i = -1;
+		usleep(100);
 		while (++i < main->n_phi)
 		{
 			check_death(main, &main->phi[i]);
@@ -49,10 +49,10 @@ void	check_end(t_main *main)
 			else if (main->nb_phi_full == main->n_phi)
 			{
 				if (pthread_mutex_lock(&main->write))
-					ft_error(MUTEX_ERROR);
+					ft_error(main, MUTEX_ERROR);
 				main->is_max_eat = YES;
 				if (pthread_mutex_unlock(&main->write))
-					ft_error(MUTEX_ERROR);
+					ft_error(main, MUTEX_ERROR);
 			}
 		}
 	}
@@ -68,11 +68,11 @@ void	*routine(void *arg)
 	if (main->n_phi == 1)
 	{
 		put_action(main, phi->id, FORK);
-		ft_usleep(main->t_die);
+		ft_usleep(main, main->t_die);
 		return (NULL);
 	}
 	if (phi->id % 2)
-		ft_usleep(2);
+		ft_usleep(main, 50);
 	while (main->is_dead == NO && main->is_max_eat == NO)
 	{
 		eating(main, phi);
@@ -94,11 +94,11 @@ void	start_eat(t_main *main)
 		main->phi[i].last_eat = main->t_start;
 		main->phi[i].status = THINK;
 		if (pthread_create(&main->phi[i].th_id, NULL, routine, &main->phi[i]))
-			ft_error(PTHREAD_ERROR);
+			ft_error(main, PTHREAD_ERROR);
 	}
 	check_end(main);
 	i = -1;
 	while (++i < main->n_phi)
 		if (pthread_join(main->phi[i].th_id, NULL))
-			ft_error(PTHREAD_ERROR);
+			ft_error(main, PTHREAD_ERROR);
 }

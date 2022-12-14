@@ -6,38 +6,46 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:54:22 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/16 14:30:40 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:48:30 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void	ft_usleep(long long time)
+void	ft_usleep(t_main *main, int time_sleep)
 {
-	long	start;
+	long	start_time;
+	long	now_time;
 
-	start = get_time_ms();
-	while (get_time_ms() < start + time)
-		usleep(10);
+	start_time = get_time_ms();
+	while (!main->is_dead)
+	{
+		now_time = get_time_ms();
+		if (now_time - start_time >= time_sleep)
+			break ;
+		usleep(100);
+	}
 }
 
 void	put_action(t_main *main, int philo_id, char *type)
 {
 	if (pthread_mutex_lock(&main->write))
-		ft_error(MUTEX_ERROR);
+		ft_error(main, MUTEX_ERROR);
 	if (main->is_dead == NO && main->is_max_eat == NO)
 		printf("%lld %d %s\n", get_time_ms() - main->t_start, philo_id + 1,
 			type);
 	if (pthread_mutex_unlock(&main->write))
-		ft_error(MUTEX_ERROR);
+		ft_error(main, MUTEX_ERROR);
 }
 
-long long	get_time_ms(void)
+long	get_time_ms(void)
 {
 	struct timeval	t;
+	long			time;
 
 	gettimeofday(&t, NULL);
-	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
+	time = (t.tv_sec * 1000) + (t.tv_usec / 1000);
+	return (time);
 }
 
 void	ft_putendl_fd(char *s, int fd)
@@ -66,6 +74,6 @@ int	ft_atoi(char *str)
 		i++;
 	}
 	if (str[i] && !(str[i] >= '0' && str[i] <= '9'))
-		ft_error(NOT_DIGIT_ERROR);
+		ft_error(NULL, NOT_DIGIT_ERROR);
 	return (sum);
 }

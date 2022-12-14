@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:46:39 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/22 16:29:11 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:47:43 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,13 @@ void		unlock_forks(t_main *main, t_phi *phi);
 void		lock_forks(t_main *main, t_phi *phi);
 
 /* Error management */
-void		ft_error(char *type);
+void		ft_error(t_main *main, char *type);
 
 /* Utils */
 int			ft_atoi(char *s);
 void		ft_putendl_fd(char *s, int fd);
-void		ft_usleep(long long time);
-long long	get_time_ms(void);
+void		ft_usleep(t_main *main, int time);
+long		get_time_ms(void);
 void		put_action(t_main *main, int philo_id, char *type);
 
 #endif
