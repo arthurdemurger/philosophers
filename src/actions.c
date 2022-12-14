@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:05:52 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 16:39:37 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:11:09 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ void	unlock_forks(t_main *main, t_phi *phi)
 		ft_error(main, MUTEX_ERROR);
 	if (pthread_mutex_unlock(&main->fork[phi->r_fk]))
 		ft_error(main, MUTEX_ERROR);
+}
+
+void	thinking(t_main *main, int phi_id)
+{
+	put_action(main, phi_id, THINKING);
+	main->phi[phi_id].status = THINK;
 }
 
 void	sleeping(t_main *main, int phi_id)

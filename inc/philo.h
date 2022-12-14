@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:46:39 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 16:47:43 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:16:16 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_phi
 	int				status;
 	int				id;
 	int				n_eat;
-	long long		last_eat;
+	long			last_eat;
 	int				l_fk;
 	int				r_fk;
 	struct s_main	*main;
@@ -87,7 +87,7 @@ typedef struct s_main
 	int				is_dead;
 	int				is_max_eat;
 	int				nb_phi_full;
-	long long		t_start;
+	long			t_start;
 	t_phi			*phi;
 	t_mutex			*fork;
 	t_mutex			write;
@@ -100,14 +100,18 @@ typedef struct s_main
 
 /* Main */
 void		init(int ac, char **av, t_main *main);
-void		start_eat(t_main *main);
+void		*routine(void *arg);
 void		end_philo(t_main *main);
+
+/* Routine */
+void		check_end(t_main *main);
 
 /* Actions */
 void		eating(t_main *main, t_phi *phi);
 void		sleeping(t_main *main, int phi_id);
 void		unlock_forks(t_main *main, t_phi *phi);
 void		lock_forks(t_main *main, t_phi *phi);
+void		thinking(t_main *main, int phi_id);
 
 /* Error management */
 void		ft_error(t_main *main, char *type);

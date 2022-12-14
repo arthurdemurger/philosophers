@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_eat.c                                        :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:31:49 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 16:54:17 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:11:35 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	check_death(t_main *main, t_phi *phi)
 	}
 	if (pthread_mutex_unlock(&main->eat))
 		ft_error(main, MUTEX_ERROR);
-	//ft_usleep(5);
 }
 
 void	check_end(t_main *main)
@@ -45,7 +44,7 @@ void	check_end(t_main *main)
 		{
 			check_death(main, &main->phi[i]);
 			if (main->is_dead == YES)
-				break ;
+				break ; 
 			else if (main->nb_phi_full == main->n_phi)
 			{
 				if (pthread_mutex_lock(&main->write))
@@ -77,28 +76,7 @@ void	*routine(void *arg)
 	{
 		eating(main, phi);
 		sleeping(main, phi->id);
-		put_action(main, phi->id, THINKING);
-		main->phi->status = THINK;
+		thinking(main, phi->id);
 	}
 	return (NULL);
-}
-
-void	start_eat(t_main *main)
-{
-	int	i;
-
-	i = -1;
-	main->t_start = get_time_ms();
-	while (++i < main->n_phi)
-	{
-		main->phi[i].last_eat = main->t_start;
-		main->phi[i].status = THINK;
-		if (pthread_create(&main->phi[i].th_id, NULL, routine, &main->phi[i]))
-			ft_error(main, PTHREAD_ERROR);
-	}
-	check_end(main);
-	i = -1;
-	while (++i < main->n_phi)
-		if (pthread_join(main->phi[i].th_id, NULL))
-			ft_error(main, PTHREAD_ERROR);
 }
