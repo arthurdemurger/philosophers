@@ -6,11 +6,20 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:31:49 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 15:26:49 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:47:32 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
+
+void	change_status(t_main *main, t_phi *phi, int status)
+{
+	if (pthread_mutex_lock(&main->status))
+		ft_error(main, MUTEX_ERR);
+	phi->status = status;
+	if (pthread_mutex_unlock(&main->status))
+		ft_error(main, MUTEX_ERR);
+}
 
 void	check_death(t_main *main, t_phi *phi)
 {
@@ -18,6 +27,8 @@ void	check_death(t_main *main, t_phi *phi)
 
 	current_time = get_time_ms();
 	if (pthread_mutex_lock(&main->eat))
+		ft_error(main, MUTEX_ERR);
+	if (pthread_mutex_lock(&main->status))
 		ft_error(main, MUTEX_ERR);
 	if (phi->status != EAT && current_time - phi->last_eat >= main->t_die)
 	{
@@ -28,6 +39,8 @@ void	check_death(t_main *main, t_phi *phi)
 		if (pthread_mutex_unlock(&main->write))
 			ft_error(main, MUTEX_ERR);
 	}
+	if (pthread_mutex_unlock(&main->status))
+		ft_error(main, MUTEX_ERR);
 	if (pthread_mutex_unlock(&main->eat))
 		ft_error(main, MUTEX_ERR);
 }
@@ -77,8 +90,8 @@ void	*routine(void *arg)
 		eating(main, phi);
 		if (main->is_dead == YES || main->is_max_eat == YES)
 			break ;
-		sleeping(main, phi->id);
-		thinking(main, phi->id);
+		sleeping(main, phi, phi->id);
+		thinking(main, phi, phi->id);
 	}
 	return (NULL);
 }

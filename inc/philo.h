@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:46:39 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 16:34:07 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:49:43 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 # define SLEEPING "is sleeping"
 # define DIED "died"
 
-/* States */
+/* Status */
 # define EAT 0
 # define THINK 1
 # define SLEEP 2
@@ -69,7 +69,7 @@ typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_phi
 {
-	atomic_int		status;
+	int				status;
 	int				id;
 	int				n_eat;
 	long			last_eat;
@@ -95,6 +95,7 @@ typedef struct s_main
 	t_mutex			*fork;
 	t_mutex			write;
 	t_mutex			eat;
+	t_mutex			status;
 }	t_main;
 
 /*
@@ -111,10 +112,11 @@ void		check_end(t_main *main);
 
 /* Actions */
 void		eating(t_main *main, t_phi *phi);
-void		sleeping(t_main *main, int phi_id);
+void		sleeping(t_main *main, t_phi *phi, int phi_id);
 void		unlock_forks(t_main *main, t_phi *phi);
 void		lock_forks(t_main *main, t_phi *phi);
-void		thinking(t_main *main, int phi_id);
+void		thinking(t_main *main, t_phi *phi, int phi_id);
+void		change_status(t_main * main, t_phi *phi, int status);
 
 /* Error management */
 void		ft_error(t_main *main, char *type);

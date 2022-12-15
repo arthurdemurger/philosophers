@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:02:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 15:26:33 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:43:22 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	init_mutex(t_main *main)
 	if (pthread_mutex_init(&main->write, NULL))
 		ft_error(main, MUTEX_ERR);
 	if (pthread_mutex_init(&main->eat, NULL))
+		ft_error(main, MUTEX_ERR);
+	if (pthread_mutex_init(&main->status, NULL))
 		ft_error(main, MUTEX_ERR);
 }
 
