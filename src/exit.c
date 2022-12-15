@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:52:25 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 11:40:42 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:34:45 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	end_philo(t_main *main)
 
 	i = -1;
 	if (main->is_max_eat)
-		printf("philos have eaten %d times\n", main->max_eat);
+		printf("all philos have eaten %d times\n", main->max_eat);
 	if (main->init == YES)
 	{
 		while (++i < main->n_phi)

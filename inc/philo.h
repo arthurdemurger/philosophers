@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:46:39 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 15:09:40 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:34:07 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 */
 
 # include <pthread.h>
+# include <stdatomic.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
@@ -68,7 +69,7 @@ typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_phi
 {
-	int				status;
+	atomic_int		status;
 	int				id;
 	int				n_eat;
 	long			last_eat;
@@ -86,9 +87,9 @@ typedef struct s_main
 	int				n_phi;
 	int				max_eat;
 	int				init;
-	int				is_dead;
+	atomic_int		is_dead;
 	int				is_max_eat;
-	int				nb_phi_full;
+	atomic_int		nb_phi_full;
 	long			t_start;
 	t_phi			*phi;
 	t_mutex			*fork;
