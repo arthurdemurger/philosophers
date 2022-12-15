@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:02:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 10:41:37 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 10:44:29 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	init(int ac, char **av, t_main *main)
 			ft_error(NULL, MIN_EAT_ERROR);
 	}
 	if (!main->max_eat)
-		return (0);
+		return (MIN_EAT_0);
 	if (main->n_phi < 1 || main->n_phi > 500)
 		ft_error(NULL, NB_PHILO_ERROR);
 	else if (main->t_die < 0 || main->t_eat < 0 || main->t_sleep < 0)

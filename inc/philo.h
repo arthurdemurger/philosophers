@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:46:39 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 10:40:23 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 10:44:19 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 /* Others */
 # define YES 1
 # define NO 0
+# define MIN_EAT_0 0
 
 /* Actions */
 # define FORK "has taken a fork"
