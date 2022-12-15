@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:02:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 10:44:29 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 11:08:28 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	init_philo(t_main *main)
 
 int	init(int ac, char **av, t_main *main)
 {
+	main->init = NO;
 	main->max_eat = -1;
 	if (ac != 5 && ac != 6)
 		ft_error(NULL, ARGUMENT_ERROR);
@@ -57,13 +58,10 @@ int	init(int ac, char **av, t_main *main)
 	main->t_die = ft_atoi(av[2]);
 	main->t_eat = ft_atoi(av[3]);
 	main->t_sleep = ft_atoi(av[4]);
-	if (av[5])
-	{
-		if (ft_atoi(av[5]) >= 0)
-			main->max_eat = ft_atoi(av[5]);
-		else
-			ft_error(NULL, MIN_EAT_ERROR);
-	}
+	if (av[5] && ft_atoi(av[5]) >= 0)
+		main->max_eat = ft_atoi(av[5]);
+	else if (av[5])
+		ft_error(NULL, MIN_EAT_ERROR);
 	if (!main->max_eat)
 		return (MIN_EAT_0);
 	if (main->n_phi < 1 || main->n_phi > 500)
@@ -75,5 +73,6 @@ int	init(int ac, char **av, t_main *main)
 	main->nb_phi_full = 0;
 	init_philo(main);
 	init_mutex(main);
+	main->init = YES;
 	return (1);
 }

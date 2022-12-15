@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:43:51 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 10:44:42 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 11:07:02 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int ac, char **av)
 	t_main	main;
 
 	if (init(ac, av, &main) == MIN_EAT_0)
-		exit(EXIT_SUCCESS);
+		end_philo(&main);
 	start(&main);
 	end_philo(&main);
 }
