@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:31:49 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 16:47:32 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:53:03 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ void	check_end(t_main *main)
 			check_death(main, &main->phi[i]);
 			if (main->is_dead == YES)
 				break ;
-			else if (main->nb_phi_full == main->n_phi)
+			if (pthread_mutex_lock(&main->full))
+				ft_error(main, MUTEX_ERR);
+			if (main->nb_phi_full == main->n_phi)
 			{
 				if (pthread_mutex_lock(&main->write))
 					ft_error(main, MUTEX_ERR);
@@ -66,6 +68,8 @@ void	check_end(t_main *main)
 				if (pthread_mutex_unlock(&main->write))
 					ft_error(main, MUTEX_ERR);
 			}
+			if (pthread_mutex_unlock(&main->full))
+				ft_error(main, MUTEX_ERR);
 		}
 	}
 }

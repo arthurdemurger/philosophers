@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:46:39 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 16:49:43 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:53:14 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,14 @@ typedef struct s_main
 	int				init;
 	atomic_int		is_dead;
 	int				is_max_eat;
-	atomic_int		nb_phi_full;
+	int				nb_phi_full;
 	long			t_start;
 	t_phi			*phi;
 	t_mutex			*fork;
 	t_mutex			write;
 	t_mutex			eat;
 	t_mutex			status;
+	t_mutex			full;
 }	t_main;
 
 /*
