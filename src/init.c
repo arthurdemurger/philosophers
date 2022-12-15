@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:02:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 16:16:59 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 10:41:37 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_philo(t_main *main)
 	}
 }
 
-void	init(int ac, char **av, t_main *main)
+int	init(int ac, char **av, t_main *main)
 {
 	main->max_eat = -1;
 	if (ac != 5 && ac != 6)
@@ -64,7 +64,9 @@ void	init(int ac, char **av, t_main *main)
 		else
 			ft_error(NULL, MIN_EAT_ERROR);
 	}
-	if (main->n_phi < 1)
+	if (!main->max_eat)
+		return (0);
+	if (main->n_phi < 1 || main->n_phi > 500)
 		ft_error(NULL, NB_PHILO_ERROR);
 	else if (main->t_die < 0 || main->t_eat < 0 || main->t_sleep < 0)
 		ft_error(NULL, WRONG_TIME_ERROR);
@@ -73,4 +75,5 @@ void	init(int ac, char **av, t_main *main)
 	main->nb_phi_full = 0;
 	init_philo(main);
 	init_mutex(main);
+	return (1);
 }

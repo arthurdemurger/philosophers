@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:31:49 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 18:11:35 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 10:37:11 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	check_end(t_main *main)
 		{
 			check_death(main, &main->phi[i]);
 			if (main->is_dead == YES)
-				break ; 
+				break ;
 			else if (main->nb_phi_full == main->n_phi)
 			{
 				if (pthread_mutex_lock(&main->write))
@@ -75,6 +75,8 @@ void	*routine(void *arg)
 	while (main->is_dead == NO && main->is_max_eat == NO)
 	{
 		eating(main, phi);
+		if (main->is_dead == YES || main->is_max_eat == YES)
+			break ;
 		sleeping(main, phi->id);
 		thinking(main, phi->id);
 	}

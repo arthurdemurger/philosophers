@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:43:51 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 17:59:09 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 10:40:11 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	main(int ac, char **av)
 {
 	t_main	main;
 
-	init(ac, av, &main);
+	if (!init(ac, av, &main))
+		exit(EXIT_SUCCESS);
 	start(&main);
 	end_philo(&main);
 }
