@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:46:39 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 16:53:14 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:08:39 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_main
 	t_mutex			eat;
 	t_mutex			status;
 	t_mutex			full;
+	t_mutex			dead;
 }	t_main;
 
 /*
@@ -128,5 +129,7 @@ void		ft_putendl_fd(char *s, int fd);
 void		ft_usleep(t_main *main, int time);
 long		get_time_ms(void);
 void		put_action(t_main *main, int philo_id, char *type);
+void		mutex_lock(t_main *main, t_mutex mutex);
+void		mutex_unlock(t_main *main, t_mutex mutex);
 
 #endif

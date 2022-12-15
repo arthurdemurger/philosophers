@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:05:52 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 16:54:47 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:08:16 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,16 @@
 
 void	lock_forks(t_main *main, t_phi *phi)
 {
-	if (pthread_mutex_lock(&main->fork[phi->l_fk]))
-		ft_error(main, MUTEX_ERR);
+	mutex_lock(main, main->fork[phi->l_fk]);
 	put_action(main, phi->id, FORK);
-	if (pthread_mutex_lock(&main->fork[phi->r_fk]))
-		ft_error(main, MUTEX_ERR);
+	mutex_lock(main, main->fork[phi->r_fk]);
 	put_action(main, phi->id, FORK);
 }
 
 void	unlock_forks(t_main *main, t_phi *phi)
 {
-	if (pthread_mutex_unlock(&main->fork[phi->l_fk]))
-		ft_error(main, MUTEX_ERR);
-	if (pthread_mutex_unlock(&main->fork[phi->r_fk]))
-		ft_error(main, MUTEX_ERR);
+		mutex_unlock(main, main->fork[phi->l_fk]);
+		mutex_unlock(main, main->fork[phi->r_fk]);
 }
 
 void	thinking(t_main *main, t_phi *phi, int phi_id)
@@ -47,21 +43,17 @@ void	eating(t_main *main, t_phi *phi)
 {
 	lock_forks(main, phi);
 	put_action(main, phi->id, EATING);
-	if (pthread_mutex_lock(&main->eat))
-		ft_error(main, MUTEX_ERR);
+	mutex_lock(main, main->eat);
 	change_status(main, phi, EAT);
 	phi->n_eat++;
 	if (main->max_eat != -1 && phi->n_eat == main->max_eat)
 	{
-		if (pthread_mutex_lock(&main->full))
-			ft_error(main, MUTEX_ERR);
+		mutex_lock(main, main->full);
 		main->nb_phi_full++;
-		if (pthread_mutex_unlock(&main->full))
-			ft_error(main, MUTEX_ERR);
+		mutex_unlock(main, main->full);
 	}
 	phi->last_eat = get_time_ms();
-	if (pthread_mutex_unlock(&main->eat))
-		ft_error(main, MUTEX_ERR);
+	mutex_unlock(main, main->eat);
 	ft_usleep(main, main->t_eat);
 	unlock_forks(main, phi);
 }

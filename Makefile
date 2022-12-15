@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/05 13:40:38 by ademurge          #+#    #+#              #
-#    Updated: 2022/12/15 16:30:59 by ademurge         ###   ########.fr        #
+#    Updated: 2022/12/15 17:06:51 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRC			=	src/actions.c \
 				src/init.c \
 				src/main.c \
 				src/routine.c \
-				src/utils.c
+				src/utils.c \
+				src/utils2.c
 
 NAME		= philo
 

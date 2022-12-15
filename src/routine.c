@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:31:49 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 16:53:03 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:08:16 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	change_status(t_main *main, t_phi *phi, int status)
 {
-	if (pthread_mutex_lock(&main->status))
-		ft_error(main, MUTEX_ERR);
+	mutex_lock(main, main->status);
 	phi->status = status;
-	if (pthread_mutex_unlock(&main->status))
-		ft_error(main, MUTEX_ERR);
+	mutex_unlock(main, main->status);
 }
 
 void	check_death(t_main *main, t_phi *phi)
@@ -26,23 +24,17 @@ void	check_death(t_main *main, t_phi *phi)
 	long long	current_time;
 
 	current_time = get_time_ms();
-	if (pthread_mutex_lock(&main->eat))
-		ft_error(main, MUTEX_ERR);
-	if (pthread_mutex_lock(&main->status))
-		ft_error(main, MUTEX_ERR);
+	mutex_lock(main, main->eat);
+	mutex_lock(main, main->status);
 	if (phi->status != EAT && current_time - phi->last_eat >= main->t_die)
 	{
-		if (pthread_mutex_lock(&main->write))
-			ft_error(main, MUTEX_ERR);
+		mutex_lock(main, main->write);
 		main->is_dead = YES;
 		printf("%lld %d %s\n", current_time - main->t_start, phi->id + 1, DIED);
-		if (pthread_mutex_unlock(&main->write))
-			ft_error(main, MUTEX_ERR);
+		mutex_unlock(main, main->write);
 	}
-	if (pthread_mutex_unlock(&main->status))
-		ft_error(main, MUTEX_ERR);
-	if (pthread_mutex_unlock(&main->eat))
-		ft_error(main, MUTEX_ERR);
+	mutex_unlock(main, main->status);
+	mutex_unlock(main, main->eat);
 }
 
 void	check_end(t_main *main)
@@ -58,18 +50,14 @@ void	check_end(t_main *main)
 			check_death(main, &main->phi[i]);
 			if (main->is_dead == YES)
 				break ;
-			if (pthread_mutex_lock(&main->full))
-				ft_error(main, MUTEX_ERR);
+			mutex_lock(main, main->full);
 			if (main->nb_phi_full == main->n_phi)
 			{
-				if (pthread_mutex_lock(&main->write))
-					ft_error(main, MUTEX_ERR);
+				mutex_lock(main, main->write);
 				main->is_max_eat = YES;
-				if (pthread_mutex_unlock(&main->write))
-					ft_error(main, MUTEX_ERR);
+				mutex_unlock(main, main->write);
 			}
-			if (pthread_mutex_unlock(&main->full))
-				ft_error(main, MUTEX_ERR);
+			mutex_unlock(main, main->full);
 		}
 	}
 }
