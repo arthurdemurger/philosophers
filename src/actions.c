@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:05:52 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 10:19:31 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 10:46:53 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	eating(t_main *main, t_phi *phi)
 	if (pthread_mutex_lock(&main->eat))
 		ft_error(main, MUTEX_ERROR);
 	phi->n_eat++;
-	if (phi->n_eat >= main->max_eat)
+	if (main->max_eat > 0 && phi->n_eat >= main->max_eat)
 		main->nb_phi_full++;
 	if (pthread_mutex_unlock(&main->eat))
 		ft_error(main, MUTEX_ERROR);
