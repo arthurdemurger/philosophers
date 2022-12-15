@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:46:39 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 11:06:20 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:09:40 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@
 # define LEAKS system("leaks philo");
 
 /* Error management */
-# define ARGUMENT_ERROR "philo error : wrong number of arguments."
+# define ARGUMENT_ERR "philo error : wrong number of arguments."
 # define NUMBER_TOO_BIG "philo error : the number entered is too big."
-# define WRONG_TIME_ERROR "philo error : time cannot be negative."
-# define MALLOC_ERROR "philo error : there was a problem in a malloc."
-# define MUTEX_ERROR "philo error : there was a problem in a mutex."
-# define PTHREAD_ERROR "philo error : there was a problem in a thread."
-# define NB_PHILO_ERROR "philo error : incorrect number of philosophers"
-# define MIN_EAT_ERROR "philo error : philosophers cannot eat a negative number of times."
-# define NOT_DIGIT_ERROR "philo error : only enter numbers."
+# define WRONG_TIME_ERR "philo error : time not valid."
+# define MALLOC_ERR "philo error : there was a problem in a malloc."
+# define MUTEX_ERR "philo error : there was a problem in a mutex."
+# define PTHREAD_ERR "philo error : there was a problem in a thread."
+# define NB_PHI_ERR "philo error : incorrect number of philos."
+# define EAT_ERR "philo error : philos cannot eat a negative number of times."
+# define NOT_DIGIT_ERR "philo error : only enter numbers."
 
 /* Others */
 # define YES 1

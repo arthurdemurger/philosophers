@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:54:22 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 18:12:07 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 11:39:04 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	ft_usleep(t_main *main, int time_sleep)
 void	put_action(t_main *main, int philo_id, char *type)
 {
 	if (pthread_mutex_lock(&main->write))
-		ft_error(main, MUTEX_ERROR);
+		ft_error(main, MUTEX_ERR);
 	if (main->is_dead == NO && main->is_max_eat == NO)
 		printf("%ld %d %s\n", get_time_ms() - main->t_start, philo_id + 1,
 			type);
 	if (pthread_mutex_unlock(&main->write))
-		ft_error(main, MUTEX_ERROR);
+		ft_error(main, MUTEX_ERR);
 }
 
 long	get_time_ms(void)
@@ -74,6 +74,6 @@ int	ft_atoi(char *str)
 		i++;
 	}
 	if (str[i] && !(str[i] >= '0' && str[i] <= '9'))
-		ft_error(NULL, NOT_DIGIT_ERROR);
+		ft_error(NULL, NOT_DIGIT_ERR);
 	return (sum);
 }

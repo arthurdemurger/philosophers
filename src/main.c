@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:43:51 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 11:07:02 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/15 11:37:31 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	start(t_main *main)
 		main->phi[i].last_eat = main->t_start;
 		main->phi[i].status = THINK;
 		if (pthread_create(&main->phi[i].th_id, NULL, routine, &main->phi[i]))
-			ft_error(main, PTHREAD_ERROR);
+			ft_error(main, PTHREAD_ERR);
 	}
 	check_end(main);
 	i = -1;
 	while (++i < main->n_phi)
 		if (pthread_join(main->phi[i].th_id, NULL))
-			ft_error(main, PTHREAD_ERROR);
+			ft_error(main, PTHREAD_ERR);
 }
 
 int	main(int ac, char **av)
