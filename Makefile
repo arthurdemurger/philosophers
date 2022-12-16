@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/05 13:40:38 by ademurge          #+#    #+#              #
-#    Updated: 2022/12/15 17:06:51 by ademurge         ###   ########.fr        #
+#    Updated: 2022/12/16 15:32:44 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ CFLAGS		= -Wall -Wextra -Werror -pthread
 all:		$(NAME)
 
 $(NAME):
-			@gcc -fsanitize=thread ${CFLAGS} ${SRC} -o ${NAME}
+			@gcc ${CFLAGS} ${SRC} -o ${NAME}
 			@echo "$(GREEN)********** Compiled. $(RESET)"
 
 clean:

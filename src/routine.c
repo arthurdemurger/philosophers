@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:31:49 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/16 01:07:41 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:34:14 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,20 @@ void	check_end(t_main *main)
 		while (++i < main->n_phi)
 		{
 			check_death(main, &main->phi[i]);
+			mutex_lock(main, &main->write);
 			if (main->is_dead == YES)
+			{
+				mutex_unlock(main, &main->write);
 				return ;
+			}
+			mutex_unlock(main, &main->write);
 			mutex_lock(main, &main->full);
 			if (main->nb_phi_full == main->n_phi)
 			{
 				mutex_lock(main, &main->write);
 				main->is_max_eat = YES;
 				mutex_unlock(main, &main->write);
+				mutex_unlock(main, &main->full);
 				return ;
 			}
 			mutex_unlock(main, &main->full);
@@ -78,8 +84,15 @@ void	*routine(void *arg)
 	}
 	if (phi->id % 2)
 		ft_usleep(main, 50);
-	while (main->is_dead == NO && main->is_max_eat == NO)
+	while (1)
 	{
+		mutex_lock(main, &main->write);
+		if (main->is_dead == YES && main->is_max_eat == YES)
+		{
+			mutex_unlock(main, &main->write);
+			break ;
+		}
+		mutex_unlock(main, &main->write);
 		eating(main, phi);
 		if (main->is_dead == YES || main->is_max_eat == YES)
 			break ;

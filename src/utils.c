@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:54:22 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/16 01:07:46 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:17:47 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,15 @@ void	ft_usleep(t_main *main, int time_sleep)
 	long	now_time;
 
 	start_time = get_time_ms();
-	while (!main->is_dead)
+	while (1)
 	{
+		mutex_lock(main, &main->write);
+		if (main->is_dead == YES)
+		{
+			mutex_unlock(main, &main->write);
+			break ;
+		}
+		mutex_unlock(main, &main->write);
 		now_time = get_time_ms();
 		if (now_time - start_time >= time_sleep)
 			break ;
