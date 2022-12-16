@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:52:25 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/15 16:57:50 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/16 01:07:22 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	destroy_mutex(t_main *main)
 	if (pthread_mutex_destroy(&main->status))
 		ft_error(main, MUTEX_ERR);
 	if (pthread_mutex_destroy(&main->full))
-		ft_error(main, MUTEX_ERR);
-	if (pthread_mutex_destroy(&main->dead))
 		ft_error(main, MUTEX_ERR);
 }
 
